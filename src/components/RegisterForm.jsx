@@ -1,9 +1,12 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Formik, Field, Form, ErrorMessage } from "formik";
+import { Formik, Form } from "formik";
 import * as Yup from "yup";
 import RenderCityStates from "./common/RenderCityStates";
 import firebase from "../config";
+import TextInputField from "./common/TextInputField";
+// import ErrorMsg from "./common/ErrorMsg";
+// import Custom from "./common/ErrorMsg";
 
 const db = firebase.firestore();
 
@@ -67,34 +70,29 @@ function RegisterForm() {
           <h2 className="title">Regiser</h2>
           <h3 className="sub-title">Welcome On Board!</h3>
           <Form>
-            <label htmlFor="email">Email Address</label>
-            <Field name="email" type="text"></Field>
-            <ErrorMessage
+            <TextInputField
               name="email"
-              render={(msg) => <div className="error">{msg}</div>}
-            />
-
-            <label htmlFor="phone">Contact Number</label>
-            <Field name="phone" type="text"></Field>
-            <ErrorMessage
+              type="text"
+              label="Email"
+            ></TextInputField>
+            <TextInputField
               name="phone"
-              render={(msg) => <div className="error">{msg}</div>}
-            />
+              type="text"
+              label="Contact Number"
+            ></TextInputField>
 
-            <label htmlFor="password">Password</label>
-            <Field name="password" type="text"></Field>
-            <ErrorMessage
+            <TextInputField
               name="password"
-              render={(msg) => <div className="error">{msg}</div>}
-            />
+              type="password"
+              label="Password"
+            ></TextInputField>
 
-            <label htmlFor="confirmPassword">Confirm Password</label>
-            <Field name="confirmPassword" type="text"></Field>
-            {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
-              <div className="error">{formik.errors.confirmPassword}</div>
-            ) : (
-              <div className="error">{customError}</div>
-            )}
+            <TextInputField
+              name="confirmPassword"
+              type="password"
+              label="Confirm Password"
+              customError={customError}
+            ></TextInputField>
 
             <RenderCityStates
               formik={formik}
@@ -102,7 +100,11 @@ function RegisterForm() {
             ></RenderCityStates>
 
             <br></br>
-            <button type="submit" className="button">
+            <button
+              type="submit"
+              className="button"
+              disabled={formik.isSubmitting}
+            >
               Submit
             </button>
           </Form>
