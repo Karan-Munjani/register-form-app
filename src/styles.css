@@ -1,0 +1,118 @@
+* {
+  box-sizing: border-box;
+}
+body {
+  margin-top: 3em;
+  background-color: #1a202c;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "avenir next", avenir,
+    "helvetica neue", helvetica, ubuntu, roboto, noto, "segoe ui", arial,
+    sans-serif;
+}
+
+.title {
+  font-size: 2em;
+  margin-bottom: 0;
+  padding-bottom: 0;
+}
+.sub-title {
+  margin-top: 0.2em;
+  font-size: 1.2em;
+  color: #61646b;
+}
+
+.form-container {
+  padding: 0.7em;
+  max-width: 1200px;
+}
+
+label {
+  display: block;
+  margin-top: 1em;
+  margin-bottom: 0.5em;
+  font-size: 1rem;
+}
+
+form {
+  width: 100%;
+  margin-top: 1em;
+}
+
+input,
+select,
+button {
+  background-color: #2d3748;
+  border: 2px solid #4a5568;
+  border-radius: 10px;
+  width: 100%;
+  height: 40px;
+  outline: none;
+  appearance: none;
+  color: #fff;
+  font-size: 1rem;
+  padding: 0.65rem 0.5rem;
+  position: relative;
+}
+
+input[type="email"]::placeholder,
+input[type="text"]::placeholder,
+input[type="number"]::placeholder {
+  color: #a0aec0 !;
+}
+
+button {
+  margin-top: 1.5em;
+  background-color: #4a5568;
+  border: 2px solid #4a5568;
+  cursor: pointer;
+}
+
+.error {
+  font-size: 12px;
+  color: #e53e3e;
+  margin-top: 0.25rem;
+}
+@media screen and (min-width: 600px) {
+  body {
+    margin-top: 1em;
+  }
+  .container {
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    padding: 0;
+    margin: 0;
+  }
+
+  .form-container {
+    padding: 0 20em 20em 20em;
+    width: 100%;
+  }
+
+  .title {
+    font-size: 2em;
+  }
+  .sub-title {
+    font-size: 1.5em;
+  }
+  label {
+    font-size: 1.2em;
+  }
+  label:first-child {
+    margin-top: 3em;
+  }
+  input,
+  select,
+  button {
+    height: 50px;
+    font-size: 1.2rem;
+  }
+
+  button {
+    margin-top: 2em;
+  }
+
+  .error {
+    font-size: 1em;
+  }
+}
