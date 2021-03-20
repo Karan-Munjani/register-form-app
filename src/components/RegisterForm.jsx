@@ -100,11 +100,7 @@ function RegisterForm() {
             ></RenderCityStates>
 
             <br></br>
-            <button
-              type="submit"
-              className="button"
-              disabled={formik.isSubmitting}
-            >
+            <button type="submit" className="button">
               Submit
             </button>
           </Form>
