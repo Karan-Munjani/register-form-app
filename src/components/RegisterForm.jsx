@@ -1,7 +1,10 @@
 import React, { useState } from "react";
 import { useFormik } from "formik";
 import * as Yup from "yup";
-import FetchCityService from "../services/fetchCityService";
+import RenderCityStates from "./common/RenderCityStates";
+import firebase from "../config";
+
+const db = firebase.firestore();
 
 function RegisterForm() {
   let [customError, setError] = useState("");
@@ -12,7 +15,8 @@ function RegisterForm() {
       phone: "",
       password: "",
       confirmPassword: "",
-      cityState: "",
+      city: "",
+      states: "",
     },
 
     validationSchema: Yup.object({
@@ -26,10 +30,11 @@ function RegisterForm() {
         .required("Please Re-type Password")
         .min(8, "Password Must be between 8-15 Characters")
         .max(15),
-      cityState: Yup.string().required("Please Select City/State"),
+      city: Yup.string().required("Please Select City"),
+      states: Yup.string().required("Please Select State"),
     }),
 
-    onSubmit: (values) => {
+    onSubmit: async (values) => {
       const pass1 = formik.values.password;
       const pass2 = formik.values.confirmPassword;
       if (pass1 !== pass2) {
@@ -37,11 +42,20 @@ function RegisterForm() {
 
         return;
       }
-      if (formik.values.cityState !== "") {
-        setError("Please Select Your City/State");
+
+      try {
+        await db.collection("users").add({
+          email: values.email,
+          phone: values.phone,
+          password: values.password,
+          state: values.states,
+          city: values.city,
+        });
+        window.location = "/success";
+      } catch (ex) {
+        alert("Failed to submit form");
+        console.log(ex);
       }
-      alert(JSON.stringify(values, null, 2));
-      window.location = "/success";
     },
   });
 
@@ -102,21 +116,10 @@ function RegisterForm() {
             <div className="error">{customError}</div>
           )}
 
-          <label htmlFor="cityState">City/State</label>
-          <select
-            name="cityState"
-            id="cityState"
-            {...formik.getFieldProps("cityState")}
-          >
-            <option value=""></option>
-            <option value="volvo">Volvo</option>
-            <option value="saab">Saab</option>
-            <option value="mercedes">Mercedes</option>
-            <option value="audi">Audi</option>
-          </select>
-          {formik.touched.cityState && formik.errors.cityState ? (
-            <div className="error">{formik.errors.cityState}</div>
-          ) : null}
+          <RenderCityStates
+            formik={formik}
+            selectedState={formik.values.states}
+          ></RenderCityStates>
 
           <br></br>
           <button type="submit" className="button">
@@ -124,7 +127,6 @@ function RegisterForm() {
           </button>
         </form>
       </div>
-      <FetchCityService></FetchCityService>
     </>
   );
 }
