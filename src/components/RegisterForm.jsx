@@ -1,13 +1,13 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
-import { Formik } from "formik";
+import { Formik, Field, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import RenderCityStates from "./common/RenderCityStates";
 import firebase from "../config";
 
 const db = firebase.firestore();
 
-function RFJs() {
+function RegisterForm() {
   let history = useHistory();
   let [customError, setError] = useState("");
 
@@ -42,6 +42,7 @@ function RFJs() {
         const pass2 = values.confirmPassword;
         if (pass1 !== pass2) {
           setError("Confirm Password Doesn't Match");
+          //   console.log("pswd not matching");
 
           return;
         }
@@ -65,52 +66,30 @@ function RFJs() {
         <div className="form-container">
           <h2 className="title">Regiser</h2>
           <h3 className="sub-title">Welcome On Board!</h3>
-          <form onSubmit={formik.handleSubmit}>
+          <Form>
             <label htmlFor="email">Email Address</label>
-            <input
-              id="email"
+            <Field name="email" type="text"></Field>
+            <ErrorMessage
               name="email"
-              type="email"
-              placeholder="abc@xyz.com"
-              onChange={formik.handleChange}
-              onBlur={formik.handleBlur}
-              value={formik.values.email}
+              render={(msg) => <div className="error">{msg}</div>}
             />
-            {formik.touched.email && formik.errors.email ? (
-              <div className="error">{formik.errors.email}</div>
-            ) : null}
 
             <label htmlFor="phone">Contact Number</label>
-            <input
-              id="phone"
+            <Field name="phone" type="text"></Field>
+            <ErrorMessage
               name="phone"
-              type="tel"
-              placeholder="1234567890"
-              {...formik.getFieldProps("phone")}
+              render={(msg) => <div className="error">{msg}</div>}
             />
-            {formik.touched.phone && formik.errors.phone ? (
-              <div className="error">{formik.errors.phone}</div>
-            ) : null}
 
             <label htmlFor="password">Password</label>
-            <input
-              id="password"
-              name="paasword"
-              type="password"
-              {...formik.getFieldProps("password")}
+            <Field name="password" type="text"></Field>
+            <ErrorMessage
+              name="password"
+              render={(msg) => <div className="error">{msg}</div>}
             />
-            {formik.touched.password && formik.errors.password ? (
-              <div className="error">{formik.errors.password}</div>
-            ) : null}
 
             <label htmlFor="confirmPassword">Confirm Password</label>
-            <input
-              id="confirmPassword"
-              name="confirmPassword"
-              type="password"
-              // onChange={handleConfirmPassword()}
-              {...formik.getFieldProps("confirmPassword")}
-            />
+            <Field name="confirmPassword" type="text"></Field>
             {formik.touched.confirmPassword && formik.errors.confirmPassword ? (
               <div className="error">{formik.errors.confirmPassword}</div>
             ) : (
@@ -126,11 +105,11 @@ function RFJs() {
             <button type="submit" className="button">
               Submit
             </button>
-          </form>
+          </Form>
         </div>
       )}
     </Formik>
   );
 }
 
-export default RFJs;
+export default RegisterForm;
