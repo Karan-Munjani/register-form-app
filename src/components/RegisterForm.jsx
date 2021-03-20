@@ -10,7 +10,7 @@ import TextInputField from "./common/TextInputField";
 
 const db = firebase.firestore();
 
-function RegisterForm() {
+function RegisterForm({ states, cities }) {
   let history = useHistory();
   let [customError, setError] = useState("");
 
@@ -97,6 +97,8 @@ function RegisterForm() {
             <RenderCityStates
               formik={formik}
               selectedState={formik.values.states}
+              states={states}
+              cities={cities}
             ></RenderCityStates>
 
             <br></br>

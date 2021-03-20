@@ -1,10 +1,9 @@
 import React from "react";
-import csc from "country-state-city";
 
-function RenderCityStates({ formik, selectedState }) {
-  const states = csc.getStatesOfCountry("IN");
-  //   console.log(selectedState);
-  const cities = csc.getCitiesOfState("IN", selectedState);
+function RenderCityStates({ formik, selectedState, states, cities }) {
+  console.log(selectedState);
+  const opCities = cities.filter((c) => c.stateCode === selectedState);
+  console.log(opCities);
 
   return (
     <>
@@ -24,8 +23,8 @@ function RenderCityStates({ formik, selectedState }) {
       <label htmlFor="city">City</label>
       <select name="city" id="city" {...formik.getFieldProps("city")}>
         <option value=""></option>
-        {cities.map((c) => (
-          <option key={c.name + "8"} value={c.name}>
+        {opCities.map((c) => (
+          <option key={c.name} value={c.name}>
             {c.name}
           </option>
         ))}
