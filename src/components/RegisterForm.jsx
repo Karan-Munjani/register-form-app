@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import { useHistory } from "react-router-dom";
 import { useFormik } from "formik";
 import * as Yup from "yup";
 import RenderCityStates from "./common/RenderCityStates";
@@ -7,6 +8,7 @@ import firebase from "../config";
 const db = firebase.firestore();
 
 function RegisterForm() {
+  let history = useHistory();
   let [customError, setError] = useState("");
 
   const formik = useFormik({
@@ -51,7 +53,7 @@ function RegisterForm() {
           state: values.states,
           city: values.city,
         });
-        window.location = "/success";
+        history.replace("/success");
       } catch (ex) {
         alert("Failed to submit form");
         console.log(ex);
